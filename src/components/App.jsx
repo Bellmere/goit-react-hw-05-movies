@@ -1,18 +1,21 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router";
+import Navigation from "./Navigation/Navigation";
+import { Lazy } from "react-lazy";
 
-export const App = () => {
+
+const Home = Lazy(() =>
+  import('../components/Home/Home' /*webpackChunkName: "Home"*/),
+);
+
+const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <>
+      <Navigation />
+      <Routes>
+        <Route exact path="/" component={Home}/>
+      </Routes>
+    </>
   );
 };
+
+export default App;
