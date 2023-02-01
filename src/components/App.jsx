@@ -1,18 +1,15 @@
 import { Route, Routes } from "react-router";
 import Navigation from "./Navigation/Navigation";
-import { Lazy } from "react-lazy";
-
-
-const Home = Lazy(() =>
-  import('../components/Home/Home' /*webpackChunkName: "Home"*/),
-);
+import Home from "../components/Home/Home";
+import Movies from "./Movies/Movies";
 
 const App = () => {
   return (
     <>
       <Navigation />
       <Routes>
-        <Route exact path="/" component={Home}/>
+        <Route path="/" element={<Home />}/>
+        <Route path="/movies" element={<Movies />}/>
       </Routes>
     </>
   );

@@ -1,22 +1,25 @@
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
+
 const Navigation = () => {
     return (
-        <div className='container'>
+        <section className='navigation'>
+            <div className='container'>
             <ul className='navigation__list'>
                 <li className='navigation__item'>
-                    <NavLink exact to='/' className="navigation__link" activeClassName="navigation__link--active">
+                    <NavLink to='/' className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}>
                         Home
                     </NavLink>
                 </li>
                 <li className='navigation__item'>
-                    <NavLink exact to='/movies' className="navigation__link" activeClassName="navigation__link--active">
+                    <NavLink to='/movies' className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}>
                         Movies
                     </NavLink>
                 </li>
             </ul>
         </div>
+        </section>
     );
 }
 
