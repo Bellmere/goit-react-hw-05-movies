@@ -12,6 +12,11 @@ const AXIOS = axios.create({
     return await AXIOS.get(`trending/all/day`).then(res => res.data);
   }
 
+  async function searchMovie(inputSearch) {
+    return await AXIOS.get(`/search/movie?query=${inputSearch}&page=1`).then(res => res.data);
+  }
+
   export {
     fetchTrendingMovies,
+    searchMovie,
   }

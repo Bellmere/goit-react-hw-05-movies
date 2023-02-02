@@ -5,7 +5,7 @@ export default function MovieList({movies}) {
         <ul>
             {movies &&
             movies.map(movie => (
-                <li>
+                <li id={movie.id}>
                     {movie.title ?? movie.name}
                 </li>
             ))}
