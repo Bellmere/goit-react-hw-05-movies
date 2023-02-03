@@ -37,7 +37,7 @@ const Movies = () => {
             setStatus(Status.REJECTED);
 
         });
-    }, [inputSearch]);
+    }, [inputSearch, movies]);
 
     const handleSearchSubmit = inputSearch => {
         setInputSearch(inputSearch);
