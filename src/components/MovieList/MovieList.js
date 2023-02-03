@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './MovieList.css';
 
 export default function MovieList({movies}) {
-    let location = useLocation();
+    const location = useLocation();
     return (
         <ul>
             {movies &&
@@ -16,8 +16,9 @@ export default function MovieList({movies}) {
                         from: location,
                         },
                     }}
-                    ></Link>
-                    {movie.title ?? movie.name}
+                    >
+                        {movie.title ?? movie.name}
+                    </Link>
                 </li>
             ))}
         </ul>

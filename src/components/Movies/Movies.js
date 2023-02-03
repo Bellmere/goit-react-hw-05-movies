@@ -30,14 +30,13 @@ const Movies = () => {
             if (data.results.length > 0) {
                 setStatus(Status.RESOLVED);
                 setMovies(data.results);
-                console.log(movies);
                 return;
             }
 
             setStatus(Status.REJECTED);
 
         });
-    }, [inputSearch, movies]);
+    }, [inputSearch]);
 
     const handleSearchSubmit = inputSearch => {
         setInputSearch(inputSearch);
