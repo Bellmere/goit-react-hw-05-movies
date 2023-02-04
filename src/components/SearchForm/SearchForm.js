@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from 'prop-types';
 import './SearchForm.css';
 
-const SearchForm = (props) => {
+const SearchForm = ({onSubmit}) => {
     const [inputSearch, setInputSearch] = useState('');
 
     const handleChange = e => {
@@ -15,7 +15,7 @@ const SearchForm = (props) => {
             alert('Write correct word');
             return;
         } else {
-            props.onSubmit(inputSearch);
+            onSubmit(inputSearch);
             setInputSearch('');
         }
     }
