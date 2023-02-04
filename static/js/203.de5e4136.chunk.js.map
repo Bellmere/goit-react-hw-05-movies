@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/203.de5e4136.chunk.js","mappings":"iMAME,MAJF,WACI,OAAO,eAAIA,UAAU,YAAd,gCACR,C","sources":["components/NotFound/NotFound.js"],"sourcesContent":["import './NotFound.css';\n\nfunction NotFound() {\n    return <h1 className=\"not-found\">404 Page not found </h1>;\n  }\n  \n  export default NotFound;"],"names":["className"],"sourceRoot":""}
