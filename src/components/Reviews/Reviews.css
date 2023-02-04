@@ -1,0 +1,16 @@
+.reviews__list  {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.reviews__list h3 {
+    margin: 0 auto 20px;
+    text-align: center;
+}
+
+.reviews__list p {
+    margin: 0 auto 20px;
+}

@@ -1,6 +1,6 @@
 import * as Api from '../services/tmdb-api';
-import { useState, useEffect } from 'react';
-import { NavLink, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, Fragment } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Loader from 'components/Loader/Loader';
 
@@ -54,24 +54,52 @@ const MovieDetails = () => {
 
     if (status === Status.RESOLVED) {
         return (
-            <section>
-                <div>
-                    <div className='movie-details__poster'>
-                        <img
-                        src={`${BASE_URL}${poster_path}`}
-                        alt={title}
-                        >
-                        </img>
+            <>
+                <section>
+                    <div>
+                        <div className='movie-details__poster'>
+                            <img
+                            src={`${BASE_URL}${poster_path}`}
+                            alt={title}
+                            >
+                            </img>
+                        </div>
+                        <div className='movie-details__content'>
+                            <h2>{`${title} (${releaseData})`}</h2>
+                            <h3>Overview: </h3>
+                            <p>{overview}</p>
+                            <h3>Genres: </h3>
+                            <p>{genrs}</p>
+                        </div>
                     </div>
-                    <div className='movie-details__content'>
-                        <h2>{`${title} (${releaseData})`}</h2>
-                        <h3>Overview: </h3>
-                        <p>{overview}</p>
-                        <h3>Genres: </h3>
-                        <p>{genrs}</p>
+                </section>
+                <section>
+                    <div>
+                        <h2>Aditional information</h2>
+                        <ul className='navigation__list'>
+                            <li className='navigation__item'>
+                            <NavLink
+                                to={`/movies/${movieId}/reviews`}
+                                className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
+                                state={location.state}
+                            >
+                                Reviews
+                            </NavLink>
+                            </li>
+                            <li className='navigation__item'>
+                            <NavLink
+                                to={`/movies/${movieId}/cast`}
+                                className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
+                                state={location.state}
+                            >
+                                Cast
+                            </NavLink>
+                            </li>
+                        </ul>
+                        <Outlet />
                     </div>
-                </div>
-            </section>
+                </section>
+            </>
         );
     }
 }

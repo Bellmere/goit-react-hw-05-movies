@@ -20,8 +20,18 @@ const AXIOS = axios.create({
     return await AXIOS.get(`movie/${movieId}?`).then(res => res.data);
   }
 
+  async function fetchMovieCredits(movieId) {
+    return await AXIOS.get(`movie/${movieId}/credits?`).then(res => res.data.cast);
+  }
+
+  async function fetchMovieReviews(movieId) {
+    return await AXIOS.get(`movie/${movieId}/reviews?`).then(res => res.data.results);
+  }
+
   export {
     fetchTrendingMovies,
     searchMovie,
     fetchAboutMovie,
+    fetchMovieCredits,
+    fetchMovieReviews,
   }
