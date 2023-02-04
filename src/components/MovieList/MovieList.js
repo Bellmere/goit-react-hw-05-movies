@@ -18,7 +18,7 @@ export default function MovieList({movies}) {
                         },
                     }}
                     >
-                        {movie.title ?? movie.name}
+                        <p>{movie.original_title}</p>
                     </Link>
                 </li>
             ))}
@@ -27,5 +27,14 @@ export default function MovieList({movies}) {
 }
 
 MovieList.propTypes = {
-    movies: PropTypes.array,
+    movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        original_title: PropTypes.string,
+      })
+    ),
   };
+
+// MovieList.propTypes = {
+//     movies: PropTypes.array,
+//   };

@@ -6,6 +6,7 @@ import { HiArrowLeft } from "react-icons/hi";
 import Loader from 'components/Loader/Loader';
 import Rejected from 'components/Error/Error';
 import Section from 'components/Section/Section';
+import brokenImage from '../../images/broken_img.png';
 
 import './MovieDetails.css';
 
@@ -71,11 +72,17 @@ const MovieDetails = () => {
                         <HiArrowLeft/>
                     </button>
                     <div className='movie-details__poster'>
+                        {poster_path? (
                         <img
                         src={`${BASE_URL}${poster_path}`}
                         alt={title}
                         >
-                        </img>
+                        </img>) : (
+                        <img
+                        src={brokenImage}
+                        alt={title}
+                        >
+                        </img>)}
                     </div>
                     <div className='movie-details__content'>
                         <h2>{`${title} (${releaseData})`}</h2>

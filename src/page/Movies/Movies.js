@@ -62,9 +62,6 @@ const Movies = () => {
         setInputSearch(inputSearch);
       };
 
-      console.log(status);
-      console.log(movies);
-
 
 
     if (status === Status.IDLE) {
