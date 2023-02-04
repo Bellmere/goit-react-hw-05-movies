@@ -1,5 +1,6 @@
 import * as Api from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import SearchForm from 'components/SearchForm/SearchForm';
 import MovieList from 'components/MovieList/MovieList';
 import Loader from 'components/Loader/Loader';
@@ -17,9 +18,26 @@ const Status = {
   }
 
 const Movies = () => {
-    const [movies, setMovies] = useState(null);
     const [inputSearch, setInputSearch] = useState('');
     const [status, setStatus] = useState(Status.IDLE);
+    const [movies, setMovies] = useState(() => {
+        const groups = sessionStorage.getItem('groups');
+        return JSON.parse(groups) ?? [];
+      });
+
+    const location = useLocation();
+
+    useEffect(() => {
+        sessionStorage.setItem('groups', JSON.stringify(movies));
+      }, [movies]);
+      
+
+      useEffect(() => {
+        if (location.groupsname) {
+          setMovies(location.groupsname);
+        }
+      }, [location.groupsname]);
+
 
     useEffect(() => {
         if (!inputSearch) {
@@ -30,8 +48,8 @@ const Movies = () => {
 
         Api.searchMovie(inputSearch).then(data => {
             if (data.results.length > 0) {
-                setStatus(Status.RESOLVED);
                 setMovies(data.results);
+                setStatus(Status.RESOLVED);
                 return;
             }
 
@@ -44,15 +62,17 @@ const Movies = () => {
         setInputSearch(inputSearch);
       };
 
+      console.log(status);
+      console.log(movies);
+
 
 
     if (status === Status.IDLE) {
         return (
-            <section>
-                <div>
+            <Section>
                 <SearchForm onSubmit={handleSearchSubmit} />
-                </div>
-            </section>
+                {movies && <MovieList movies={movies} />}
+            </Section>
         );
     }
 

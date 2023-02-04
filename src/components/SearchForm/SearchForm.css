@@ -2,4 +2,22 @@
     padding: 10px 24px;
     width: 33vw;
     max-width: 400px;
+    margin-bottom: 40px;
+}
+
+.searchbar__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    margin-left: 20px;
+    background-color: transparent;
+    border: 1px solid #000;
+    border-radius: 4px;
+
+    transition: background-color 300ms linear;
+}
+
+.searchbar__btn:hover {
+    background-color: rgb(253, 183, 53);
 }

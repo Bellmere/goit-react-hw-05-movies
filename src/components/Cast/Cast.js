@@ -56,13 +56,13 @@ const Status = {
                                         {item.profile_path? 
                                         (<img
                                             src={`https://image.tmdb.org/t/p/w300${item.profile_path}`}
-                                            alt={`${item.name} photo`}
+                                            alt={`${item.name}`}
                                         >
                                         </img>)
                                         : 
                                         (<img
                                             src={brokenImage}
-                                            alt={`${item.name} photo`}
+                                            alt={`${item.name}`}
                                         >
                                         </img>)}
                                     </div>

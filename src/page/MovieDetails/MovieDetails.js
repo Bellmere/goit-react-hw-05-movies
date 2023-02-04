@@ -1,7 +1,8 @@
 import * as Api from '../../services/tmdb-api';
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { HiArrowLeft } from "react-icons/hi";
 import Loader from 'components/Loader/Loader';
 import Rejected from 'components/Error/Error';
 import Section from 'components/Section/Section';
@@ -38,7 +39,10 @@ const MovieDetails = () => {
         })
     },[movieId]);
 
-    const onBack = () => navigate(location?.state?.from ?? '/');
+    const onBack = (e) => {
+        e.preventDefault();
+        navigate(-1 ?? '/')
+    };
 
     const { overview, poster_path, release_date, title, genres } = movieDetail;
     const genrs = genres && genres.map(genr => genr.name).join(', ');
@@ -51,6 +55,9 @@ const MovieDetails = () => {
     if (status === Status.REJECTED) {
         return (
             <Section>
+                <button className='movie-details__btn' onClick={onBack}>
+                    <HiArrowLeft/>
+                </button>
                 <Rejected />
             </Section>
         );
@@ -60,20 +67,23 @@ const MovieDetails = () => {
         return (
             <>
                 <Section>
-                        <div className='movie-details__poster'>
-                            <img
-                            src={`${BASE_URL}${poster_path}`}
-                            alt={title}
-                            >
-                            </img>
-                        </div>
-                        <div className='movie-details__content'>
-                            <h2>{`${title} (${releaseData})`}</h2>
-                            <h3>Overview: </h3>
-                            <p>{overview}</p>
-                            <h3>Genres: </h3>
-                            <p>{genrs}</p>
-                        </div>
+                    <button type='button' className='movie-details__btn' onClick={onBack}>
+                        <HiArrowLeft/>
+                    </button>
+                    <div className='movie-details__poster'>
+                        <img
+                        src={`${BASE_URL}${poster_path}`}
+                        alt={title}
+                        >
+                        </img>
+                    </div>
+                    <div className='movie-details__content'>
+                        <h2>{`${title} (${releaseData})`}</h2>
+                        <h3>Overview: </h3>
+                        <p>{overview}</p>
+                        <h3>Genres: </h3>
+                        <p>{genrs}</p>
+                    </div>
                 </Section>
                 <Section>
                         <h2 className='aditional__title'>Aditional information</h2>
@@ -82,7 +92,7 @@ const MovieDetails = () => {
                             <NavLink
                                 to={`/movies/${movieId}/reviews`}
                                 className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
-                                state={location.state}
+                                state={{from: location}}
                             >
                                 Reviews
                             </NavLink>
@@ -91,13 +101,16 @@ const MovieDetails = () => {
                             <NavLink
                                 to={`/movies/${movieId}/cast`}
                                 className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
-                                state={location.state}
+                                state={{from: location}}
                             >
                                 Cast
                             </NavLink>
                             </li>
                         </ul>
-                        <Outlet />
+                        <hr />
+                        <Suspense fallback={<Loader />}>
+                            <Outlet />
+                        </Suspense>
                 </Section>
             </>
         );
