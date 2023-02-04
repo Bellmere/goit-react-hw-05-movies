@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as Api from '../services/tmdb-api';
+import * as Api from '../../services/tmdb-api';
 import { useParams } from 'react-router';
 import Loader from 'components/Loader/Loader';
 import Section from 'components/Section/Section';

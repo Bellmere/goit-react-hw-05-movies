@@ -1,0 +1,20 @@
+.movie-details__poster {
+    text-align: center;
+}
+
+.movie-details__poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
+
+.movie-details__content {
+    text-align: center;
+}
+
+.aditional__title {
+    text-align: center;
+    font-size: 32px;
+    line-height: 1.2;
+}

@@ -1,9 +1,11 @@
-import * as Api from '../services/tmdb-api';
+import * as Api from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
 import SearchForm from 'components/SearchForm/SearchForm';
 import MovieList from 'components/MovieList/MovieList';
 import Loader from 'components/Loader/Loader';
 import PropTypes from 'prop-types';
+import Section from 'components/Section/Section';
+import Rejected from 'components/Error/Error';
 
 import './Movies.css';
 
@@ -57,37 +59,35 @@ const Movies = () => {
     if (status === Status.PENDING) {
         <SearchForm onSubmit={handleSearchSubmit} />
         return (
-            <section>
-                <div>
+            <Section>
                 <SearchForm onSubmit={handleSearchSubmit} />
                 <Loader />
-                </div>
-            </section>
+            </Section>
         );
     }
 
     if (status === Status.REJECTED) {
         <SearchForm onSubmit={handleSearchSubmit} />
         return (
-            <section>
-                <div>
+            <Section>
                 <SearchForm onSubmit={handleSearchSubmit} />
-                <div>Oops something going wrong;(</div>
-                </div>
-            </section>
+                <Rejected />
+            </Section>
         );
     }
 
     if (status === Status.RESOLVED) {
         return (
-            <section>
-                <div>
+            <Section>
                 <SearchForm onSubmit={handleSearchSubmit} />
                 <MovieList movies={movies} />
-                </div>
-            </section>
+            </Section>
         );
     }
+}
+
+Movies.porpTypes = {
+    inputSearch: PropTypes.string.isRequired,
 }
 
 export default Movies;

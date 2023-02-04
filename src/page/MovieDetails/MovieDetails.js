@@ -1,8 +1,10 @@
-import * as Api from '../services/tmdb-api';
+import * as Api from '../../services/tmdb-api';
 import { useState, useEffect, Fragment } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Loader from 'components/Loader/Loader';
+import Rejected from 'components/Error/Error';
+import Section from 'components/Section/Section';
 
 import './MovieDetails.css';
 
@@ -36,9 +38,7 @@ const MovieDetails = () => {
         })
     },[movieId]);
 
-    const onBack = () => {
-        navigate(location?.state?.from ?? '/');
-    }
+    const onBack = () => navigate(location?.state?.from ?? '/');
 
     const { overview, poster_path, release_date, title, genres } = movieDetail;
     const genrs = genres && genres.map(genr => genr.name).join(', ');
@@ -49,14 +49,17 @@ const MovieDetails = () => {
     }
 
     if (status === Status.REJECTED) {
-        return <div>Oops something going wrong;(</div>
+        return (
+            <Section>
+                <Rejected />
+            </Section>
+        );
     }
 
     if (status === Status.RESOLVED) {
         return (
             <>
-                <section>
-                    <div>
+                <Section>
                         <div className='movie-details__poster'>
                             <img
                             src={`${BASE_URL}${poster_path}`}
@@ -71,11 +74,9 @@ const MovieDetails = () => {
                             <h3>Genres: </h3>
                             <p>{genrs}</p>
                         </div>
-                    </div>
-                </section>
-                <section>
-                    <div>
-                        <h2>Aditional information</h2>
+                </Section>
+                <Section>
+                        <h2 className='aditional__title'>Aditional information</h2>
                         <ul className='navigation__list'>
                             <li className='navigation__item'>
                             <NavLink
@@ -97,8 +98,7 @@ const MovieDetails = () => {
                             </li>
                         </ul>
                         <Outlet />
-                    </div>
-                </section>
+                </Section>
             </>
         );
     }

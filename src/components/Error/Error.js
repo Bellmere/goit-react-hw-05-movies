@@ -1,7 +1,7 @@
 import './Error.css';
 
 const Rejected = () => {
-    return <div className='error__text'>Oops something going wrong;(</div>;
+    return <div className='error__text'>Ooops. Something went wrong;(</div>;
 }
 
 export default Rejected;

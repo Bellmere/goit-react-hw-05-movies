@@ -1,7 +1,8 @@
-import * as Api from '../services/tmdb-api';
+import * as Api from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
 import MovieList from 'components/MovieList/MovieList';
 import './Home.css';
+import Section from 'components/Section/Section';
 
 const Home = () => {
     const [movies, setMovies] = useState(null);
@@ -16,12 +17,10 @@ const Home = () => {
     
 
     return (
-        <section>
-            <div>
-                <h1>Trending today</h1>
-                <MovieList movies={movies} />
-            </div>
-        </section>
+        <Section>
+            <h1>Trending today</h1>
+            <MovieList movies={movies} />
+        </Section>
     );
 }
 
