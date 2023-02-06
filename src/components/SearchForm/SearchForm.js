@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import PropTypes from 'prop-types';
 import './SearchForm.css';
 
 const SearchForm = ({onSubmit}) => {
-    const [inputSearch, setInputSearch] = useState('');
+    const [inputSearch, setInputSearch] = useState(() => {
+        const prevSearch = sessionStorage.getItem('prevSearch');
+        return JSON.parse(prevSearch) ?? '';
+      });
+
+    const location = useLocation();
+
+    useEffect(() => {
+        sessionStorage.setItem('prevSearch', JSON.stringify(inputSearch));
+      }, [inputSearch]);
+      
+
+      useEffect(() => {
+        if (location.groupsname) {
+          setInputSearch(location.groupsname);
+        }
+      }, [location.groupsname]);
 
     const handleChange = e => {
         setInputSearch(e.target.value.toLowerCase());
@@ -29,6 +46,7 @@ const SearchForm = ({onSubmit}) => {
             autoFocus
             placeholder="Movies"
             onChange={handleChange}
+            defaultValue={inputSearch}
             />
             <button type="submit" className="searchbar__btn">
                 Search

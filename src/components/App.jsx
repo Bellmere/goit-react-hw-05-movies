@@ -24,7 +24,7 @@ const App = () => {
             <Route path="reviews" element={<Reviews />}/>
           <Route />
           </Route>
-          <Route component={NotFound} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </>

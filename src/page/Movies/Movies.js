@@ -18,8 +18,13 @@ const Status = {
   }
 
 const Movies = () => {
-    const [inputSearch, setInputSearch] = useState('');
+    const [inputSearch, setInputSearch] = useState(() => {
+        const prevSearch = sessionStorage.getItem('prevSearch');
+        return JSON.parse(prevSearch) ?? '';
+      });
+
     const [status, setStatus] = useState(Status.IDLE);
+
     const [movies, setMovies] = useState(() => {
         const groups = sessionStorage.getItem('groups');
         return JSON.parse(groups) ?? [];
@@ -27,14 +32,17 @@ const Movies = () => {
 
     const location = useLocation();
 
+
     useEffect(() => {
         sessionStorage.setItem('groups', JSON.stringify(movies));
-      }, [movies]);
+        sessionStorage.setItem('prevSearch', JSON.stringify(inputSearch));
+      }, [movies, inputSearch]);
       
 
       useEffect(() => {
         if (location.groupsname) {
           setMovies(location.groupsname);
+          setInputSearch(location.groupsname);
         }
       }, [location.groupsname]);
 
@@ -97,7 +105,7 @@ const Movies = () => {
         return (
             <Section>
                 <SearchForm onSubmit={handleSearchSubmit} />
-                <MovieList movies={movies} />
+                <MovieList movies={movies} prevLocation={location} />
             </Section>
         );
     }

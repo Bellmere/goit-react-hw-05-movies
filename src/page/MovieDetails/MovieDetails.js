@@ -1,6 +1,6 @@
 import * as Api from '../../services/tmdb-api';
 import { useState, useEffect, Suspense } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { HiArrowLeft } from "react-icons/hi";
 import Loader from 'components/Loader/Loader';
@@ -25,7 +25,6 @@ const MovieDetails = () => {
     const { movieId } = useParams();
 
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         setStatus(Status.PENDING);
@@ -40,14 +39,11 @@ const MovieDetails = () => {
         })
     },[movieId]);
 
-    const onBack = (e) => {
-        e.preventDefault();
-        navigate(-1 ?? '/')
-    };
-
     const { overview, poster_path, release_date, title, genres } = movieDetail;
     const genrs = genres && genres.map(genr => genr.name).join(', ');
     const releaseData = release_date && release_date.slice(0, 4);
+    const cameBack = location.state?.from ?? '/';
+    console.log(cameBack);
 
     if (status === Status.PENDING) {
         return <Loader />
@@ -56,9 +52,9 @@ const MovieDetails = () => {
     if (status === Status.REJECTED) {
         return (
             <Section>
-                <button className='movie-details__btn' onClick={onBack}>
+                <Link className='movie-details__btn' to={cameBack}>
                     <HiArrowLeft/>
-                </button>
+                </Link>
                 <Rejected />
             </Section>
         );
@@ -68,9 +64,9 @@ const MovieDetails = () => {
         return (
             <>
                 <Section>
-                    <button type='button' className='movie-details__btn' onClick={onBack}>
+                    <Link className='movie-details__btn' to={cameBack}>
                         <HiArrowLeft/>
-                    </button>
+                    </Link>
                     <div className='movie-details__poster'>
                         {poster_path? (
                         <img
@@ -99,7 +95,7 @@ const MovieDetails = () => {
                             <NavLink
                                 to={`/movies/${movieId}/reviews`}
                                 className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
-                                state={{from: location}}
+                                state={{from: cameBack}}
                             >
                                 Reviews
                             </NavLink>
@@ -108,7 +104,7 @@ const MovieDetails = () => {
                             <NavLink
                                 to={`/movies/${movieId}/cast`}
                                 className={({ isActive }) => isActive? "navigation__link--active": 'navigation__link'}
-                                state={{from: location}}
+                                state={{from: cameBack}}
                             >
                                 Cast
                             </NavLink>
